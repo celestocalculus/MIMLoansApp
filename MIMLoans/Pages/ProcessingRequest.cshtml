@@ -1,0 +1,75 @@
+﻿@page
+@using MIMLoans.Models;
+
+@model MIMLoans.Pages.ProcessingRequestModel
+
+@{
+    ViewData["Title"] = "Loan Application Successful";
+}
+
+
+@if (Model.LoanRequest == null)
+{
+    <div class="text-center">
+        <h1 class="display-4">No loan request found with the ID supplied</h1>
+    </div>
+}
+else
+{
+    <div class="text-center">
+        <h1 class="display-4">Loan Application Successful</h1>
+    </div>
+    <br />
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-md-6 col-sm-12">
+                <div class="row">
+                    Your Loan application will be processed and you'll get an email soon. Details is given below:
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col"><span style="font-weight: bolder">Loan Request:</span> NGN @Model.LoanRequest.LoanAmount.ToString("N")</div>
+                </div>
+                <div class="row">
+                    <div class="col"><span style="font-weight: bolder">Amount Repayable:</span> NGN @Model.LoanRequest.AmountRepayable.ToString("N")</div>
+                </div>
+                <div class="row">
+                    <div class="col"><span style="font-weight: bolder">Repayment Term:</span> @LoanRequest.LoanTenureInMonths months</div>
+                </div>
+                <div class="row">
+                    <div class="col"><span style="font-weight: bolder">Repayment Schedule:</span> Monthly</div>
+                </div>
+                <div class="row">
+                    <div class="col"><span style="font-weight: bolder">Interest Rate:</span> @LoanRequest.InterestRate% monthly</div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row justify-content-md-center">
+            <div class="col-md-6 col-sm-12">
+                <div class="row">
+                    <strong>Repayment Schedule:</strong>
+                </div>
+                <br />
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Month</th>
+                            <th scope="col">Amount Repayable</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 1; i <= 18; i++)
+                        {
+                            <tr>
+                                <td>Month @i</td>
+                                <td>NGN @((Model.LoanRequest.AmountRepayable / LoanRequest.LoanTenureInMonths).ToString("N"))</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <br />
+        </div>
+    </div>
+}
